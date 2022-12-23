@@ -1,0 +1,7 @@
+.intro {
+	@apply flex flex-col mt-32 justify-center items-center;
+}
+
+.bookImg {
+	@apply block w-1/4;
+}

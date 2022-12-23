@@ -1,0 +1,15 @@
+.info {
+	@apply mt-3 mb-7 text-center text-lg font-medium;
+}
+
+.listWrapper {
+	@apply container mx-auto;
+}
+
+.bookList {
+	@apply grid grid-cols-4 gap-16;
+}
+
+.loadMoreBtn {
+	@apply block mx-auto px-9 py-2 mt-8 mb-5 bg-slate-600 text-white hover:bg-slate-500 duration-200;
+}

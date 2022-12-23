@@ -1,0 +1,27 @@
+.searchBar {
+	@apply flex justify-center pb-5;
+}
+
+.input {
+	@apply w-4/12 h-9 px-2 text-lg font-medium outline-none;
+}
+
+.formBtn {
+	@apply bg-white px-1;
+}
+
+.sortWrapper {
+	@apply flex justify-center align-middle flex-wrap;
+}
+
+.label {
+	@apply text-lg text-white;
+}
+
+.category {
+	@apply mr-5;
+}
+
+.select {
+	@apply w-52 h-7 ml-3 text-gray-600 outline-none;
+}

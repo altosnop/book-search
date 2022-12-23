@@ -1,0 +1,32 @@
+.wrapper {
+	@apply flex flex-col;
+}
+
+.bookWrapper {
+	@apply flex w-full;
+	height: calc(100vh - 220px);
+}
+
+.bookImgWrapper {
+	@apply flex items-center justify-center w-2/5 bg-gray-100;
+}
+
+.bookImg {
+	@apply h-2/3 shadow-2xl;
+}
+
+.bookInfoWrapper {
+	@apply p-12 flex-1;
+}
+
+.bookTags {
+	@apply pb-11;
+}
+
+.bookTitle {
+	@apply pb-3 text-2xl font-medium;
+}
+
+.bookAuthors {
+	@apply pb-11 underline text-gray-400;
+}

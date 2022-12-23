@@ -1,0 +1,7 @@
+.header {
+	@apply bg-gray-700 py-7;
+}
+
+.mainTitle {
+	@apply pb-10 text-4xl font-bold text-center text-white;
+}
