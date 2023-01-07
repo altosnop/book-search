@@ -1,14 +1,16 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Book, BooksState, BooksResponse, UrlParams } from '../../types/types';
 
 const API_KEY = 'AIzaSyB-wdKrVLoy3_cKXrGo14v4xoCo7RTJ7xs';
 
-const initialState = {
+const initialState: BooksState = {
 	items: [],
 	params: {
 		query: '',
 		category: '',
 		orderBy: '',
+		startIndex: 0,
 	},
 	totalItems: 0,
 	loading: false,
@@ -16,17 +18,18 @@ const initialState = {
 
 export const getBooks = createAsyncThunk(
 	'books/getBooks',
-	async (params, { rejectWithValue, dispatch }) => {
+	async (
+		{ query, category, startIndex = 0, orderBy }: UrlParams,
+		{ rejectWithValue, dispatch }
+	) => {
 		try {
-			const { query, category, startIndex = 0, orderBy } = params;
-			const response = await axios.get(
+			const { data } = await axios.get<BooksResponse>(
 				`https://www.googleapis.com/books/v1/volumes?q=${query}:${category}&startIndex=${startIndex}&maxResults=32&orderBy=${orderBy}&key=${API_KEY}`
 			);
 
-			dispatch(setLoading(true));
-			dispatch(setBooks(response.data.items));
-			dispatch(setTotalItems(response.data.totalItems));
-		} catch (error) {
+			dispatch(setBooks(data.items));
+			dispatch(setTotalItems(data.totalItems));
+		} catch (error: any) {
 			return rejectWithValue(error.message);
 		}
 	}
@@ -36,35 +39,36 @@ const booksSlice = createSlice({
 	name: 'books',
 	initialState,
 	reducers: {
-		setBooks: (state, action) => {
+		setBooks: (state, action: PayloadAction<Book[]>) => {
 			state.items = [...state.items, ...action.payload];
 		},
-		setParams: (state, action) => {
+		setParams: (state, action: PayloadAction<UrlParams>) => {
 			state.params = action.payload;
 		},
-		setTotalItems: (state, action) => {
+		setTotalItems: (state, action: PayloadAction<number>) => {
 			state.totalItems = action.payload;
-		},
-		setLoading: (state, action) => {
-			state.loading = action.payload;
 		},
 		reset: (state, _) => {
 			state.items = [];
-			state.params = {};
+			state.params = {
+				query: '',
+				category: '',
+				orderBy: '',
+				startIndex: 0,
+			};
 			state.totalItems = 0;
 		},
 	},
 	extraReducers: builder => {
+		builder.addCase(getBooks.pending, (state, _) => {
+			state.loading = true;
+		});
 		builder.addCase(getBooks.fulfilled, (state, _) => {
 			state.loading = false;
 		});
 	},
 });
 
-export const { setBooks } = booksSlice.actions;
-export const { setParams } = booksSlice.actions;
-export const { setTotalItems } = booksSlice.actions;
-export const { setLoading } = booksSlice.actions;
-export const { reset } = booksSlice.actions;
+export const { setBooks, setParams, setTotalItems, reset } = booksSlice.actions;
 
 export default booksSlice.reducer;

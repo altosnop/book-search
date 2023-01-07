@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import styles from './styles.module.css';
 import {
 	booksSelector,
 	paramsSelector,
 	totalItemsSelector,
-} from './../../store/books/booksSelectors';
+} from '../../store/books/booksSelectors';
 
 import BookCard from '../BookCard';
 import { getBooks } from '../../store/books/booksSlice';
 import { Link } from 'react-router-dom';
 
 const BookList = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const [startIndex, setStartIndex] = useState(1);
 
-	const books = useSelector(booksSelector);
-	const params = useSelector(paramsSelector);
-	const totalItems = useSelector(totalItemsSelector);
+	const books = useAppSelector(booksSelector);
+	const params = useAppSelector(paramsSelector);
+	const totalItems = useAppSelector(totalItemsSelector);
 
 	const onLoadMore = () => {
 		const newParams = {
@@ -45,7 +45,7 @@ const BookList = () => {
 									}
 									tag={book.volumeInfo.categories}
 									name={book.volumeInfo.title}
-									authors={book.volumeInfo?.authors?.join(', ')}
+									authors={book.volumeInfo.authors}
 								/>
 							</Link>
 						);

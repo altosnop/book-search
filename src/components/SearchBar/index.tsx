@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../assets/search.svg';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks/hooks';
 import { getBooks, reset, setParams } from '../../store/books/booksSlice';
 
 const SearchBar = () => {
 	const history = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const [query, setQuery] = useState('');
 	const [category, setCategory] = useState('');
 	const [sort, setSort] = useState('relevance');
 
-	const onBookSearch = e => {
+	const onBookSearch = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const params = {
 			query,
 			category,
 			orderBy: sort,
+			startIndex: 0,
 		};
 
-		dispatch(reset());
+		dispatch(reset(''));
 		dispatch(getBooks(params));
 		dispatch(setParams(params));
 

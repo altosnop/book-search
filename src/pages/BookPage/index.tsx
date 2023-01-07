@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
-import Header from './../../components/Header';
+import Header from '../../components/Header';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Book } from '../../types/types';
 
-const Book = () => {
+const BookPage = () => {
 	const { bookId } = useParams();
-	const [book, setBook] = useState(null);
+	const [book, setBook] = useState<Book | undefined>(undefined);
 
 	useEffect(() => {
 		const getBook = async () => {
@@ -37,7 +38,7 @@ const Book = () => {
 						<p className={styles.bookTags}>{book.volumeInfo.categories}</p>
 						<h2 className={styles.bookTitle}>{book.volumeInfo.title}</h2>
 						<p className={styles.bookAuthors}>
-							{book.volumeInfo.authors.join(', ')}
+							{book.volumeInfo.authors && book.volumeInfo.authors.join(', ')}
 						</p>
 						<p className={styles.bookDescription}>
 							{book.volumeInfo.description}
@@ -49,4 +50,4 @@ const Book = () => {
 	);
 };
 
-export default Book;
+export default BookPage;
