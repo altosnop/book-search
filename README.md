@@ -1,3 +1,5 @@
+![Alt Text](./src/assets/book-finder.gif)
+
 # Book Finder
 
 The user enters the name of the book and receives any available books. You can find more information
