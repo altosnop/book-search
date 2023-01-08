@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Book, BooksState, BooksResponse, UrlParams } from '../../types/types';
 
-const API_KEY = 'AIzaSyB-wdKrVLoy3_cKXrGo14v4xoCo7RTJ7xs';
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 const initialState: BooksState = {
 	items: [],
